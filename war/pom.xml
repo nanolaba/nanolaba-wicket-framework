@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>war</artifactId>
     <name>war</name>
-    <version>${com.nanolaba.wicket-framework.version}</version>
+    <version>1.0.0</version>
     <packaging>war</packaging>
 
     <parent>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.nanolaba.wicket-framework</groupId>
             <artifactId>core</artifactId>
-            <version>${com.nanolaba.wicket-framework.version}</version>
+            <version>[0.0.1,)</version>
         </dependency>
     </dependencies>
 

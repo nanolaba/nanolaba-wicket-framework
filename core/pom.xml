@@ -17,8 +17,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
 
-        <!-- WICKET -->
+        <!-- LIB VERSION-->
+        <com.nanolaba.wicket-framework.version>0.0.2</com.nanolaba.wicket-framework.version>
 
+        <!-- WICKET -->
         <wicket.version>9.12.0</wicket.version>
         <wicket-datetime.version>9.12.0</wicket-datetime.version>
         <wicket-jquery-ui.version>9.11.0</wicket-jquery-ui.version>
