@@ -1,0 +1,185 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.nanolaba.wicket-framework</groupId>
+    <artifactId>parent</artifactId>
+    <name>parent</name>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>core</module>
+        <module>war</module>
+    </modules>
+
+    <properties>
+
+        <!--        <maven.test.skip>true</maven.test.skip>-->
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- версии модулей -->
+
+        <com.nanolaba.wicket-framework.version>0.0.1</com.nanolaba.wicket-framework.version>
+
+
+        <!-- версии библиотек -->
+
+        <!-- Maven plugins -->
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <native2ascii-maven-plugin.version>1.0-beta-1</native2ascii-maven-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
+        <yuicompressor-maven-plugin.version>1.5.1</yuicompressor-maven-plugin.version>
+
+    </properties>
+
+    <developers>
+        <developer>
+            <email>alexander@andriishin.com</email>
+            <name>Alexander Andriishin</name>
+        </developer>
+    </developers>
+
+    <repositories>
+        <repository>
+            <id>nanolaba-mvn-repo</id>
+            <url>https://github.com/nanolaba/mvn-repo/raw/master/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <!--        <repository>-->
+        <!--            <id>russian-morphology.lucene.apache.org</id>-->
+        <!--            <name>Lucene Russian Morphology Repository for Maven</name>-->
+        <!--            <url>http://russianmorphology.googlecode.com/svn/repo/releases/</url>-->
+        <!--        </repository>-->
+        <!--        <repository>-->
+        <!--            <id>sonatype-snapshots</id>-->
+        <!--            <name>Sonatype Snapshots Repository</name>-->
+        <!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
+        <!--            <snapshots>-->
+        <!--                <enabled>true</enabled>-->
+        <!--            </snapshots>-->
+        <!--        </repository>-->
+        <repository>
+            <id>JCenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xsd</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.html</include>
+                    <include>**/*.css</include>
+                    <include>**/*.js</include>
+                    <include>**/*.jpeg</include>
+                    <include>**/*.gif</include>
+                    <include>**/*.png</include>
+                    <include>**/*.jpg</include>
+                    <include>**/*.scss</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
+                    <source>13</source>
+                    <target>13</target>
+                    <encoding>UTF-8</encoding>
+                    <excludes>
+                        <exclude>**/?*.properties</exclude>
+                    </excludes>
+                    <fork>true</fork>
+                    <meminitial>128m</meminitial>
+                    <maxmem>512m</maxmem>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven-clean-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>native2ascii-maven-plugin</artifactId>
+                <version>${native2ascii-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>n2s2</id>
+                        <goals>
+                            <goal>native2ascii</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF8</encoding>
+                            <!--<tempDir>${basedir}/src/main/java</tempDir>-->
+                            <workDir>${project.build.directory}/classes</workDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>n2s3</id>
+                        <goals>
+                            <goal>native2ascii</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF8</encoding>
+                            <!--<tempDir>${basedir}/src/main/resources</tempDir>-->
+                            <workDir>${project.build.directory}/classes</workDir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <argLine>-Xmx4000m -Dsw.email.queue=off -Dfile.encoding=UTF-8</argLine>
+                    <!--                    <systemPropertyVariables>-->
+                    <!--                        <sw.email.queue>off</sw.email.queue>-->
+                    <!--                    </systemPropertyVariables>-->
+                    <!--<testFailureIgnore>true</testFailureIgnore>-->
+                    <!--                    <properties>-->
+                    <!--                        <configurationParameters>-->
+                    <!--                            junit.jupiter.execution.parallel.enabled = true-->
+                    <!--                            junit.jupiter.execution.parallel.mode.default = concurrent-->
+                    <!--                            junit.jupiter.execution.parallel.mode.classes.default = same_thread-->
+                    <!--                        </configurationParameters>-->
+                    <!--                    </properties>-->
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+
+</project>

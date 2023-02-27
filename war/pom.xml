@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>war</artifactId>
+    <name>war</name>
+    <version>${com.nanolaba.wicket-framework.version}</version>
+    <packaging>war</packaging>
+
+    <parent>
+        <groupId>com.nanolaba.wicket-framework</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.nanolaba.wicket-framework</groupId>
+            <artifactId>core</artifactId>
+            <version>${com.nanolaba.wicket-framework.version}</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <archive>
+                        <addMavenDescriptor>true</addMavenDescriptor>
+                        <manifestEntries>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+                            <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+                        </manifestEntries>
+                    </archive>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>yuicompressor-maven-plugin</artifactId>
+                <version>${yuicompressor-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>jslint</goal>
+                            <goal>compress</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/webapp</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/war-${project.version}</outputDirectory>
+                    <includes>
+                        <include>export/**/*.css</include>
+                        <include>export/**/*.js</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*min.js</exclude>
+                        <exclude>**/*min.css</exclude>
+                    </excludes>
+                    <force>true</force>
+                    <gzip>false</gzip>
+                    <suffix>.min</suffix>
+                    <!--&lt;!&ndash;<nosuffix>true</nosuffix>&ndash;&gt;-->
+                    <!--<aggregations>-->
+                    <!--<aggregation>-->
+                    <!--<removeIncluded>false</removeIncluded>-->
+                    <!--&lt;!&ndash; insert new line after each concatenation (default: false) &ndash;&gt;-->
+                    <!--&lt;!&ndash;<insertNewLine>true</insertNewLine>&ndash;&gt;-->
+                    <!--<output>-->
+                    <!--${project.build.directory}/war-${project.version}/export/css/a.css-->
+                    <!--</output>-->
+                    <!--&lt;!&ndash; files to include, path relative to output's directory or absolute path&ndash;&gt;-->
+                    <!--&lt;!&ndash;inputDir>base directory for non absolute includes, default to parent dir of output</inputDir&ndash;&gt;-->
+                    <!--<inputDir>-->
+                    <!--${project.build.directory}/war-${project.version}/export/css-->
+                    <!--</inputDir>-->
+                    <!--<includes>-->
+                    <!--<include>-->
+                    <!--*.min.css-->
+                    <!--</include>-->
+                    <!--</includes>-->
+                    <!--<excludes>-->
+                    <!--<exclude>*tinymce.scss</exclude>-->
+                    <!--</excludes>-->
+                    <!--</aggregation>-->
+                    <!--</aggregations>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>13</source>
+                    <target>13</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
