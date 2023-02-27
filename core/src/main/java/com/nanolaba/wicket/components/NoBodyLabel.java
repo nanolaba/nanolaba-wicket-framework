@@ -1,14 +1,13 @@
 package com.nanolaba.wicket.components;
 
-import org.apache.wicket.markup.html.basic.Label;
+import com.nanolaba.wicket.components.basic.FLabel;
 import org.apache.wicket.model.IModel;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
 
 import java.io.Serializable;
 
-public class NoBodyLabel extends Label implements IComponentWithVisibilityFunction<NoBodyLabel> {
+public class NoBodyLabel extends FLabel {
 
-    private SerializableBooleanSupplier visibilityFunction;
+    private static final long serialVersionUID = 2908427965868192301L;
 
     public NoBodyLabel(String id) {
         super(id);
@@ -23,19 +22,5 @@ public class NoBodyLabel extends Label implements IComponentWithVisibilityFuncti
     public NoBodyLabel(String id, IModel<?> model) {
         super(id, model);
         setRenderBodyOnly(true);
-    }
-
-    @Override
-    protected void onConfigure() {
-        if (visibilityFunction != null) {
-            setVisible(visibilityFunction.getAsBoolean());
-        }
-        super.onConfigure();
-    }
-
-    @Override
-    public NoBodyLabel setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
-        return this;
     }
 }

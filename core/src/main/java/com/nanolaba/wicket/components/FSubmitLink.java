@@ -4,15 +4,16 @@ import com.nanolaba.wicket.interfaces.Action;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 
-public class FSubmitLink extends SubmitLink implements IComponentWithVisibilityFunction<FSubmitLink> {
+public class FSubmitLink extends SubmitLink implements IFunctionalComponent<FSubmitLink> {
 
+    private static final long serialVersionUID = 200275494451899658L;
     private Action submitAction;
     private Action afterSubmitAction;
     private Action errorAction;
-    private SerializableBooleanSupplier visibilityFunction;
 
+    private final Functions functions = new Functions();
 
     public FSubmitLink(String id) {
         super(id);
@@ -46,16 +47,20 @@ public class FSubmitLink extends SubmitLink implements IComponentWithVisibilityF
     }
 
     @Override
-    public FSubmitLink setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
+    public FSubmitLink setFunctionVisible(SerializableSupplier<Boolean> function) {
+        functions.setVisible(function);
+        return this;
+    }
+
+    @Override
+    public FSubmitLink setFunctionEnabled(SerializableSupplier<Boolean> function) {
+        functions.setEnabled(function);
         return this;
     }
 
     @Override
     protected void onConfigure() {
-        if (visibilityFunction != null) {
-            setVisible(visibilityFunction.getAsBoolean());
-        }
+        functions.configure(this);
         super.onConfigure();
     }
 

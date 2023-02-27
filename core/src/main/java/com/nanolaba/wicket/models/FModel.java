@@ -9,6 +9,8 @@ import java.util.List;
 
 public class FModel<P> extends LoadableDetachableModel<P> {
 
+    private static final long serialVersionUID = 3802385558748145518L;
+
     private final SerializableSupplier<P> getter;
     private final List<IDetachable> objectForDetach = new ArrayList<>();
 
@@ -32,11 +34,10 @@ public class FModel<P> extends LoadableDetachableModel<P> {
         return this;
     }
 
-
     @Override
-    protected void onDetach() {
-        objectForDetach.forEach(e -> e.detach());
-        super.onDetach();
+    public void detach() {
+        objectForDetach.forEach(IDetachable::detach);
+        super.detach();
     }
 
     @Override

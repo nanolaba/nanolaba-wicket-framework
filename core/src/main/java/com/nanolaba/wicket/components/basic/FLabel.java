@@ -1,15 +1,17 @@
 package com.nanolaba.wicket.components.basic;
 
-import com.nanolaba.wicket.components.IComponentWithVisibilityFunction;
+import com.nanolaba.wicket.components.Functions;
+import com.nanolaba.wicket.components.IFunctionalComponent;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 
 import java.io.Serializable;
 
-public class FLabel extends Label implements IComponentWithVisibilityFunction<FLabel> {
+public class FLabel extends Label implements IFunctionalComponent<FLabel> {
 
-    private SerializableBooleanSupplier visibilityFunction;
+    private static final long serialVersionUID = 6755928287477538138L;
+    private final Functions functions = new Functions();
 
     public FLabel(String id) {
         super(id);
@@ -24,16 +26,20 @@ public class FLabel extends Label implements IComponentWithVisibilityFunction<FL
     }
 
     @Override
-    public FLabel setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
+    public FLabel setFunctionVisible(SerializableSupplier<Boolean> function) {
+        functions.setVisible(function);
+        return this;
+    }
+
+    @Override
+    public FLabel setFunctionEnabled(SerializableSupplier<Boolean> function) {
+        functions.setEnabled(function);
         return this;
     }
 
     @Override
     protected void onConfigure() {
-        if (visibilityFunction != null) {
-            setVisible(visibilityFunction.getAsBoolean());
-        }
+        functions.configure(this);
         super.onConfigure();
     }
 }

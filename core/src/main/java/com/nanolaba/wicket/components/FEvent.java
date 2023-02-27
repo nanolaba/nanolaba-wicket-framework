@@ -8,6 +8,7 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 
 public class FEvent extends AjaxFormComponentUpdatingBehavior {
 
+    private static final long serialVersionUID = -824188083400791034L;
     private AjaxAction updateAction;
     private AjaxErrorAction errorAction;
 

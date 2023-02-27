@@ -4,15 +4,16 @@ import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 
 import java.io.Serializable;
 
 
-public class FTab<T extends WebMarkupContainer> extends AbstractTab implements IComponentWithVisibilityFunction<FTab<T>> {
+public class FTab<T extends WebMarkupContainer> extends AbstractTab implements IFunctionalComponent<FTab<T>> {
 
+    private static final long serialVersionUID = 6526762649559208326L;
     private PanelSupplier<T> panelSupplier;
-    private SerializableBooleanSupplier visibilityFunction;
+    private final Functions functions = new Functions();
 
     public FTab(String title, PanelSupplier<T> panelSupplier) {
         this(Model.of(title), panelSupplier);
@@ -29,8 +30,14 @@ public class FTab<T extends WebMarkupContainer> extends AbstractTab implements I
     }
 
     @Override
-    public FTab<T> setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
+    public FTab<T> setFunctionVisible(SerializableSupplier<Boolean> function) {
+        functions.setVisible(function);
+        return this;
+    }
+
+    @Override
+    public FTab<T> setFunctionEnabled(SerializableSupplier<Boolean> function) {
+        functions.setEnabled(function);
         return this;
     }
 
@@ -41,7 +48,7 @@ public class FTab<T extends WebMarkupContainer> extends AbstractTab implements I
 
     @Override
     public boolean isVisible() {
-        return visibilityFunction == null ? super.isVisible() : visibilityFunction.getAsBoolean();
+        return functions.getVisible() == null ? super.isVisible() : functions.getVisible().get();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

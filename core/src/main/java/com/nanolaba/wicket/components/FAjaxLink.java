@@ -4,13 +4,15 @@ import com.nanolaba.wicket.interfaces.AjaxAction;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.IModel;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 
 
-public class FAjaxLink<T> extends AjaxLink<T> implements IComponentWithVisibilityFunction<FAjaxLink<T>> {
+public class FAjaxLink<T> extends AjaxLink<T> implements IFunctionalComponent<FAjaxLink<T>> {
+
+    private static final long serialVersionUID = 7594872527846098585L;
 
     private AjaxAction clickAction;
-    private SerializableBooleanSupplier visibilityFunction;
+    private final Functions functions = new Functions();
 
     public FAjaxLink(String id) {
         super(id);
@@ -36,16 +38,20 @@ public class FAjaxLink<T> extends AjaxLink<T> implements IComponentWithVisibilit
     }
 
     @Override
-    public FAjaxLink<T> setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
+    public FAjaxLink<T> setFunctionVisible(SerializableSupplier<Boolean> function) {
+        functions.setVisible(function);
+        return this;
+    }
+
+    @Override
+    public FAjaxLink<T> setFunctionEnabled(SerializableSupplier<Boolean> function) {
+        functions.setEnabled(function);
         return this;
     }
 
     @Override
     protected void onConfigure() {
-        if (visibilityFunction != null) {
-            setVisible(visibilityFunction.getAsBoolean());
-        }
+        functions.configure(this);
         super.onConfigure();
     }
 

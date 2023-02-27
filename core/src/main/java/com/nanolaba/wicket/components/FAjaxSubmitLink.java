@@ -4,14 +4,15 @@ import com.nanolaba.wicket.interfaces.AjaxAction;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 
-public class FAjaxSubmitLink extends AjaxSubmitLink implements IComponentWithVisibilityFunction<FAjaxSubmitLink> {
+public class FAjaxSubmitLink extends AjaxSubmitLink implements IFunctionalComponent<FAjaxSubmitLink> {
 
+    private static final long serialVersionUID = 1313747318663579718L;
     private AjaxAction submitAction;
     private AjaxAction afterSubmitAction;
     private AjaxAction errorAction;
-    private SerializableBooleanSupplier visibilityFunction;
+    private final Functions functions = new Functions();
 
     public FAjaxSubmitLink(String id) {
         super(id);
@@ -37,16 +38,20 @@ public class FAjaxSubmitLink extends AjaxSubmitLink implements IComponentWithVis
     }
 
     @Override
-    public FAjaxSubmitLink setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
+    public FAjaxSubmitLink setFunctionVisible(SerializableSupplier<Boolean> function) {
+        functions.setVisible(function);
+        return this;
+    }
+
+    @Override
+    public FAjaxSubmitLink setFunctionEnabled(SerializableSupplier<Boolean> function) {
+        functions.setEnabled(function);
         return this;
     }
 
     @Override
     protected void onConfigure() {
-        if (visibilityFunction != null) {
-            setVisible(visibilityFunction.getAsBoolean());
-        }
+        functions.configure(this);
         super.onConfigure();
     }
 

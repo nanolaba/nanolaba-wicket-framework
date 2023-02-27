@@ -3,13 +3,14 @@ package com.nanolaba.wicket.components;
 import com.nanolaba.wicket.interfaces.Action;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 
 
-public class FLink<T> extends Link<T> implements IComponentWithVisibilityFunction<FLink<T>> {
+public class FLink<T> extends Link<T> implements IFunctionalComponent<FLink<T>> {
 
+    private static final long serialVersionUID = -358211214066948957L;
     private Action clickAction;
-    private SerializableBooleanSupplier visibilityFunction;
+    private final Functions functions = new Functions();
 
     public FLink(String id) {
         super(id);
@@ -29,11 +30,6 @@ public class FLink<T> extends Link<T> implements IComponentWithVisibilityFunctio
         this.clickAction = clickAction;
     }
 
-    @Override
-    public FLink<T> setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
-        return this;
-    }
 
     public FLink<T> setClickAction(Action clickAction) {
         this.clickAction = clickAction;
@@ -41,10 +37,20 @@ public class FLink<T> extends Link<T> implements IComponentWithVisibilityFunctio
     }
 
     @Override
+    public FLink<T> setFunctionVisible(SerializableSupplier<Boolean> function) {
+        functions.setVisible(function);
+        return this;
+    }
+
+    @Override
+    public FLink<T> setFunctionEnabled(SerializableSupplier<Boolean> function) {
+        functions.setEnabled(function);
+        return this;
+    }
+
+    @Override
     protected void onConfigure() {
-        if (visibilityFunction != null) {
-            setVisible(visibilityFunction.getAsBoolean());
-        }
+        functions.configure(this);
         super.onConfigure();
     }
 

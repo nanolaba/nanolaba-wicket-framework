@@ -4,12 +4,13 @@ import com.nanolaba.wicket.interfaces.AjaxAction;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.model.IModel;
-import org.danekja.java.util.function.serializable.SerializableBooleanSupplier;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 
-public class FAjaxCheckBox extends AjaxCheckBox implements IComponentWithVisibilityFunction<FAjaxCheckBox> {
+public class FAjaxCheckBox extends AjaxCheckBox implements IFunctionalComponent<FAjaxCheckBox> {
 
+    private static final long serialVersionUID = 7722042939708164042L;
     private AjaxAction updateAction;
-    private SerializableBooleanSupplier visibilityFunction;
+    private final Functions functions = new Functions();
 
     public FAjaxCheckBox(String id) {
         super(id);
@@ -35,16 +36,20 @@ public class FAjaxCheckBox extends AjaxCheckBox implements IComponentWithVisibil
     }
 
     @Override
-    public FAjaxCheckBox setVisibilityFunction(SerializableBooleanSupplier visibilityFunction) {
-        this.visibilityFunction = visibilityFunction;
+    public FAjaxCheckBox setFunctionVisible(SerializableSupplier<Boolean> function) {
+        functions.setVisible(function);
+        return this;
+    }
+
+    @Override
+    public FAjaxCheckBox setFunctionEnabled(SerializableSupplier<Boolean> function) {
+        functions.setEnabled(function);
         return this;
     }
 
     @Override
     protected void onConfigure() {
-        if (visibilityFunction != null) {
-            setVisible(visibilityFunction.getAsBoolean());
-        }
+        functions.configure(this);
         super.onConfigure();
     }
 
