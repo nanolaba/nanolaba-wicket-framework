@@ -19,14 +19,14 @@
         <!--        <maven.test.skip>true</maven.test.skip>-->
 
         <!-- версии библиотек -->
-        <com.nanolaba.wicket-framework.version>0.0.6</com.nanolaba.wicket-framework.version>
+        <com.nanolaba.wicket-framework.version>0.0.7</com.nanolaba.wicket-framework.version>
 
         <!-- Maven plugins -->
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
         <native2ascii-maven-plugin.version>1.0-beta-1</native2ascii-maven-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M9</maven-surefire-plugin.version>
+        <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
         <yuicompressor-maven-plugin.version>1.5.1</yuicompressor-maven-plugin.version>
 
     </properties>

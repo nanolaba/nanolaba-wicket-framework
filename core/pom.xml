@@ -24,6 +24,12 @@
         <!-- LOGBACK-->
         <logback.version>1.4.5</logback.version>
 
+        <!-- NANOLABA -->
+        <nanolaba-commons.version>0.0.67</nanolaba-commons.version>
+        <nanolaba-filestorage.version>0.1.6</nanolaba-filestorage.version>
+        <nanolaba-email-queue.version>0.0.8</nanolaba-email-queue.version>
+
+
     </properties>
 
     <dependencies>
@@ -33,6 +39,22 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nanolaba</groupId>
+            <artifactId>nanolaba-commons</artifactId>
+            <version>${nanolaba-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nanolaba</groupId>
+            <artifactId>filestorage</artifactId>
+            <version>${nanolaba-filestorage.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nanolaba</groupId>
+            <artifactId>email-queue</artifactId>
+            <version>${nanolaba-email-queue.version}</version>
         </dependency>
 
         <dependency>
@@ -173,48 +195,4 @@
             <version>${logback.version}</version>
         </dependency>
     </dependencies>
-
-    <build>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <compilerArgument>-parameters</compilerArgument>
-                    <source>11</source>
-                    <target>11</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
