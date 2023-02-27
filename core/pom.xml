@@ -19,9 +19,10 @@
 
         <!-- WICKET -->
 
-        <wicket.version>8.12.0</wicket.version>
-        <wicket-datetime.version>${wicket.version}</wicket-datetime.version>
-        <wicket-jquery-ui.version>${wicket.version}</wicket-jquery-ui.version>
+        <wicket.version>9.12.0</wicket.version>
+        <wicket-datetime.version>9.12.0</wicket-datetime.version>
+        <wicket-jquery-ui.version>9.11.0</wicket-jquery-ui.version>
+        <wicked-charts-wicket8.version>3.2.1</wicked-charts-wicket8.version>
 
     </properties>
 
